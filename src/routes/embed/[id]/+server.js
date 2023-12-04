@@ -9,7 +9,8 @@ export async function GET({ params }) {
     const { rows, fields } =
         await client.sql`SELECT * FROM posts WHERE title = ${params.id}`;
 
-    console.log(rows)
+    let res =  new Response(rows ? rows[0].data : '{}');   
+    res.headers.append('Access-Control-Allow-Origin', '*');
 
-    return new Response(rows ? rows[0].data : '{}');
+    return res;
 };
