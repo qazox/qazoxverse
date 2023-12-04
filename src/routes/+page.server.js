@@ -1,9 +1,9 @@
 import { db } from '@vercel/postgres';
 
+const client = await db.connect();
+
 /** @type {import('./$types').PageLoad} */
 export async function load() {
-    const client = await db.connect();
-
     await client.sql`CREATE TABLE IF NOT EXISTS posts (title TEXT, data TEXT, date REAL)`;
 
     const pageSize = 10;
@@ -21,7 +21,17 @@ export async function load() {
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	default: async (event) => {
-		// TODO log the user in
+	default: async ({request}) => {
+		const data = await request.formData();
+        let name = data.get('name') || '';
+        let save = data.get('save') || '';
+        if (name.length < 1 || save.length < 1 ) return;
+
+        const { rows, fields } =
+            await client.sql`SELECT * FROM posts WHERE title = ${name}`;
+
+        if (rows && rows.length > 0 ) return;
+
+        await client.sql`INSERT INTO posts (title, data, date) VALUES (${name}, ${save}, ${+new Date()})`;
 	}
 };

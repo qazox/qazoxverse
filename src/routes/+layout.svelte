@@ -26,6 +26,10 @@
         --gray-7: rgb(245, 240, 255);
     }
 
+    :global(a) {
+        color: var(--gray-5);
+    }
+
     :global(body) {
         padding: 0;
         margin: 0;
