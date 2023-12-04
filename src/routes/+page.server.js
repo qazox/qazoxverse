@@ -6,7 +6,7 @@ const client = await db.connect();
 export async function load() {
     await client.sql`CREATE TABLE IF NOT EXISTS posts (title TEXT, data TEXT, date REAL)`;
 
-    const pageSize = 10;
+    const pageSize = 100;
     const pageNumber = 1; 
      
     const offset = (pageNumber - 1) * pageSize;
