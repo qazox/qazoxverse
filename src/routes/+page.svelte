@@ -1,2 +1,14 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	/** @type {import('./$types').PageData} */
+    export let data;
+</script>
+
+<form method='POST'>
+    <p>Type a save code to upload it to the public.</p>
+    <textarea name='save'>
+        
+    </textarea>
+    <input type='submit'>
+</form>
+
+{data?.pageVisits}
