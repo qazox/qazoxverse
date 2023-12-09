@@ -33,13 +33,10 @@
 
 <div class='rows'>
     {#each rows as row}
-        {#if isJsonString(row.data)}
-            <div class='item'>
-                <iframe width='240' height='135' src='https://altboxels.qazox.dev?only=true&embed={org}/embed/{row.title}'></iframe>
-                <span><a href='https://altboxels.qazox.dev?embed={org}/embed/{row.title}'>{row.title}</a></span>
-                <span>Published on {(new Date(row.date)+'').split('GMT')[0]}</span>
-            </div>
-        {/if}
+        <div class='item'>
+            <span><a href='https://altboxels.qazox.dev?embed={org}/embed/{row.title}'>{row.title}</a></span>
+            <span>Published on {(new Date(row.date)+'').split('GMT')[0]}</span>
+        </div>
     {/each}
 </div>
 
