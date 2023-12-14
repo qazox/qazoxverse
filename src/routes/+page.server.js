@@ -3,11 +3,12 @@ import { db } from '@vercel/postgres';
 const client = await db.connect();
 
 /** @type {import('./$types').PageLoad} */
-export async function load() {
+export async function load({url}) {
     await client.sql`CREATE TABLE IF NOT EXISTS posts (title TEXT, data TEXT, date REAL)`;
 
-    const pageSize = 100;
-    const pageNumber = 1; 
+    const pageSize = 20;
+    let pageNumber = url.searchParams.get('page') || 1;
+    pageNumber = Math.max(Math.floor(pageNumber),1); 
      
     const offset = (pageNumber - 1) * pageSize;
      
@@ -15,7 +16,8 @@ export async function load() {
         await client.sql`SELECT * FROM posts ORDER BY date DESC LIMIT ${pageSize} OFFSET ${offset};`;
 
     return {
-        rows
+        rows,
+        pages: pageNumber
     };
 }
 
